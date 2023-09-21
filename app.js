@@ -21,6 +21,12 @@ app.use("/api", indexRoutes);
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
+const carRoutes = require("./routes/car.routes.js");
+app.use("/cars", carRoutes);
+
+const reservationRoutes = require("./routes/reservation.routes.js");
+app.use("/reservations", reservationRoutes);
+
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 
