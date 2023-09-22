@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const Car = require("../models/Car.model");
 const Reservation = require("../models/Reservation.model");
 
-//  POST /api/cars  -  Creates a new car
+//  POST /cars/cars  -  Creates a new car
 router.post("/cars", (req, res, next) => {
    
   const { name, imageUrl, maxSpeedInKm, pricePerDay, description } = req.body;
@@ -15,7 +15,7 @@ router.post("/cars", (req, res, next) => {
     .catch((err) => res.json(err));
 })
 
-//  GET /api/cars -  Retrieves all of the cars
+//  GET /cars/cars -  Retrieves all of the cars
 router.get("/cars", (req, res, next) => {
   Car.find()
     .populate("reservations")
@@ -23,7 +23,7 @@ router.get("/cars", (req, res, next) => {
     .catch((err) => res.json(err));
 });
 
-//  GET /api/cars/:carId -  Retrieves a specific car by id
+//  GET /cars/cars/:carId -  Retrieves a specific car by id
 router.get("/cars/:carId", (req, res, next) => {
   const { carId } = req.params;
 
@@ -40,7 +40,7 @@ router.get("/cars/:carId", (req, res, next) => {
     .catch((error) => res.json(error));
 });
 
-// PUT  /api/cars/:carId  -  Updates a specific car by id
+// PUT  /cars/cars/:carId  -  Updates a specific car by id
 router.put("/cars/:carId", (req, res, next) => {
   const { carId } = req.params;
 
@@ -54,7 +54,7 @@ router.put("/cars/:carId", (req, res, next) => {
     .catch((error) => res.json(error));
 });
 
-// DELETE  /api/cars/:carId  -  Deletes a specific car by id
+// DELETE  /cars/cars/:carId  -  Deletes a specific car by id
 router.delete("/cars/:carId", (req, res, next) => {
   const { carId } = req.params;
 
