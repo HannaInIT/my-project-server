@@ -18,7 +18,7 @@ router.post("/cars", (req, res, next) => {
 //  GET /cars/cars -  Retrieves all of the cars
 router.get("/cars", (req, res, next) => {
   Car.find()
-    .populate("reservations")
+    // .populate("reservations")
     .then((allCars) => res.json(allCars))
     .catch((err) => res.json(err));
 });
@@ -35,7 +35,7 @@ router.get("/cars/:carId", (req, res, next) => {
   // Each Car document has `reservations` array holding `_id`s of Reservation documents
   // We use .populate() method to get swap the `_id`s for the actual Reservation documents
   Car.findById(carId)
-    .populate("reservations")
+    // .populate("reservations")
     .then((car) => res.status(200).json(car))
     .catch((error) => res.json(error));
 });

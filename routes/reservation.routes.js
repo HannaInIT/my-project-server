@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const Reservation = require("../models/Reservation.model");
 const Car = require("../models/Car.model");
 
-//  POST /api/reservations -  Creates a new reservation
+//  POST /reservations/reservations -  Creates a new reservation
 router.post("/reservations", (req, res, next) => {
     
   const { pickupTime, dropOffTime, address, phone } = req.body;
@@ -20,15 +20,15 @@ router.post("/reservations", (req, res, next) => {
     .catch((err) => res.json(err));
 });
 
-//  GET /api/reservations -  Retrieves all of the reservations
+//  GET /reservations/reservations -  Retrieves all of the reservations
 router.get("/reservations", (req, res, next) => {
     Reservation.find()
     //   .populate("reservations")
-      .then((allreservations) => res.json(allreservations))
+      .then((allReservations) => res.json(allReservations))
       .catch((err) => res.json(err));
   });
 
-//  GET /api/reservations/:reservationId  - Retrieves a specific reservation by id
+//  GET /reservations/reservations/:reservationId  - Retrieves a specific reservation by id
 router.get("/reservations/:reservationId", (req, res, next) => {
   const { reservationId } = req.params;
 
