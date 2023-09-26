@@ -6,7 +6,8 @@ const reservationSchema = new Schema(
     pickupTime: String,
     dropOffTime: String,
     address: String,
-    phone: String
+    phone: String,
+    carId: String
   },
   {
     timestamps: true

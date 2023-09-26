@@ -8,9 +8,9 @@ const Car = require("../models/Car.model");
 //  POST /reservations/reservations -  Creates a new reservation
 router.post("/reservations", (req, res, next) => {
     
-  const { pickupTime, dropOffTime, address, phone } = req.body;
+  const { pickupTime, dropOffTime, address, phone, carId} = req.body;
 
-  Reservation.create({ pickupTime, dropOffTime, address, phone })
+  Reservation.create({ pickupTime, dropOffTime, address, phone, carId })
     .then((newReservation) => {
       return Car.findByIdAndUpdate(carId, {
         $push: { reservations: newReservation._id },
@@ -27,6 +27,16 @@ router.get("/reservations", (req, res, next) => {
       .then((allReservations) => res.json(allReservations))
       .catch((err) => res.json(err));
   });
+
+  //  GET /reservations/reservations-by-car/:carId -  Retrieves all reservations for one car
+router.get("/reservations-by-car/:carId", (req, res, next) => {
+  const { carId } = req.params;
+  var query = { carId: carId };
+  Reservation.find(query)
+  //   .populate("reservations")
+    .then((allReservations) => res.json(allReservations))
+    .catch((err) => res.json(err));
+});
 
 //  GET /reservations/reservations/:reservationId  - Retrieves a specific reservation by id
 router.get("/reservations/:reservationId", (req, res, next) => {
