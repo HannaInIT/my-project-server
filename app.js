@@ -27,6 +27,9 @@ app.use("/cars", carRoutes);
 const reservationRoutes = require("./routes/reservation.routes.js");
 app.use("/reservations", reservationRoutes);
 
+const carsRouter = require("./routes/car.routes"); // <== has to be added
+app.use('/cars', carsRouter); // <== has to be added
+
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 
