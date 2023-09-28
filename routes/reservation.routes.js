@@ -33,7 +33,7 @@ router.get("/reservations-by-car/:carId", (req, res, next) => {
   const { carId } = req.params;
   var query = { carId: carId };
   Reservation.find(query)
-  //   .populate("reservations")
+    // .populate("reservations")
     .then((allReservations) => res.json(allReservations))
     .catch((err) => res.json(err));
 });
