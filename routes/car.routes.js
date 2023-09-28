@@ -5,13 +5,16 @@ const mongoose = require("mongoose");
 const Car = require("../models/Car.model");
 const Reservation = require("../models/Reservation.model");
 
-const fileUploader = require("../config/cloudinary.config");
+// const fileUploader = require("../config/cloudinary.config");
 
 //  POST /cars/cars  -  Creates a new car
 router.post("/cars", (req, res, next) => {
    
   const { name, imageUrl, maxSpeedInKm, pricePerDay, description } = req.body;
-
+  if (name === "" || maxSpeedInKm === "" || pricePerDay === "" || description === "" ) {
+    res.status(400).json({ message: "Fill in all fields please" });
+    return;
+  }
   Car.create({ name, imageUrl, maxSpeedInKm, pricePerDay, description })
     .then((response) => res.json(response))
     .catch((err) => res.json(err));
@@ -25,18 +28,18 @@ router.get("/cars", (req, res, next) => {
     .catch((err) => res.json(err));
 });
 
-// POST "/cars/upload" => Route that receives the image, sends it to Cloudinary via the fileUploader and returns the image URL
-router.post("/upload", fileUploader.single("imageUrl"), (req, res, next) => {
-  // console.log("file is: ", req.file)
+// // POST "/cars/upload" => Route that receives the image, sends it to Cloudinary via the fileUploader and returns the image URL
+// router.post("/upload", fileUploader.single("imageUrl"), (req, res, next) => {
+//   // console.log("file is: ", req.file)
  
-  if (!req.file) {
-    next(new Error("No file uploaded!"));
-    return;
-  }
-  // Get the URL of the uploaded file and send it as a response.
-  // 'fileUrl' can be any name, just make sure you remember to use the same when accessing it on the frontend
-  res.json({ fileUrl: req.file.path });
-});
+//   if (!req.file) {
+//     next(new Error("No file uploaded!"));
+//     return;
+//   }
+//   // Get the URL of the uploaded file and send it as a response.
+//   // 'fileUrl' can be any name, just make sure you remember to use the same when accessing it on the frontend
+//   res.json({ fileUrl: req.file.path });
+// });
 
 //  GET /cars/cars/:carId -  Retrieves a specific car by id
 router.get("/cars/:carId", (req, res, next) => {
@@ -58,9 +61,15 @@ router.get("/cars/:carId", (req, res, next) => {
 // PUT  /cars/cars/:carId  -  Updates a specific car by id
 router.put("/cars/:carId", (req, res, next) => {
   const { carId } = req.params;
-
+  
   if (!mongoose.Types.ObjectId.isValid(carId)) {
     res.status(400).json({ message: "Specified id is not valid" });
+    return;
+  }
+
+  const { name, imageUrl, maxSpeedInKm, pricePerDay, description } = req.body;
+  if (name === "" || maxSpeedInKm === "" || pricePerDay === "" || description === "" ) {
+    res.status(400).json({ message: "Fill in all fields please" });
     return;
   }
 

@@ -10,6 +10,11 @@ router.post("/reservations", (req, res, next) => {
     
   const { pickupTime, dropOffTime, address, phone, carId} = req.body;
 
+  if (pickupTime === "" || dropOffTime=== "" || address === "" || phone === "") {
+    res.status(400).json({ message: "Fill in all fields please" });
+    return;
+  }
+
   Reservation.create({ pickupTime, dropOffTime, address, phone, carId })
     .then((newReservation) => {
       return Car.findByIdAndUpdate(carId, {
